@@ -4,28 +4,51 @@
   <p>Welcome, <%= current_user.email %>! Your menstruation calendar</p>
   <%= link_to "Edit Menstruation Settings", ms_calendar_data_path, class: "edit-button" %>
 
+  <% cycle_dates = [] %>
+  <% cycle_start_date = current_user.last_period_start %>
 
+  <% (0..11).each do |cycle_number| %>
+    <% cycle_dates << cycle_start_date + cycle_number * current_user.cycle_length.days %>
+  <% end %>
 
-  <%= month_calendar(attribute: :last_period_start) do |date, periods| %>
-    <%= date %>
+  <% if current_user.last_period_start.present? %>
+    <p>Last Period Start: <%= current_user.last_period_start %></p>
+    <p>Cycle Length: <%= current_user.cycle_length %></p>
+    <p>Menstruation Length: <%= current_user.menstruation_length %></p>
+  <% end %>
+
+  <%= month_calendar(attribute: :last_period_start, end_attribute: :last_period_start) do |date, _menstruation| %>
+    <%= date.day %>
     <% if current_user.last_period_start.present? %>
       <% menstruation_start = current_user.last_period_start %>
-      <% menstruation_end = current_user.last_period_start + current_user.menstruation_length.days - 1.day %>
+      <% menstruation_end = menstruation_start + current_user.menstruation_length.to_i.days %>
 
-      <% if (menstruation_start..menstruation_end).include?(date) %>
-        <div class="menstruation-details">
-          <strong>Menstruation Period</strong>
-          <br>
-          <%= "Start: #{menstruation_start}" %>
-          <br>
-          <%= "End: #{menstruation_end}" %>
-        </div>
-      <%elsif  menstruation_end < date%>
-        <% menstruation_start = menstruation_start + current_user.cycle_length%>
-        <% menstruation_end = current_user.last_period_start + current_user.menstruation_length.days - 1.day %>
+      <% cycle_dates.each do |cycle_date| %>
+        <% cycle_menstruation_start = cycle_date %>
+        <% cycle_menstruation_end = cycle_date + current_user.menstruation_length.to_i.days %>
+        <% if date >= cycle_menstruation_start && date <= cycle_menstruation_end %>
+          <div class="menstruation-details">
+            Menstruation should happen
+            <br>
+            Started: <%= cycle_menstruation_start.strftime('%Y-%m-%d') %>
+            <br>
+            Should end: <%= cycle_menstruation_end.strftime('%Y-%m-%d') %>
+          </div>
+          <% break %> <!-- Break the loop once a cycle has been found for the current date -->
+        <% elsif date >= menstruation_start && date <= menstruation_end %>
+          <div class="menstruation-details">
+            Menstruation should happen
+            <br>
+            Started: <%= menstruation_start.strftime('%Y-%m-%d') %>
+            <br>
+            Should end: <%= menstruation_end.strftime('%Y-%m-%d') %>
+          </div>
+          <% break %> <!-- Break the loop once the main menstruation range has been found for the current date -->
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
+
 
 <% else %>
   <p>You are not logged in.</p>
