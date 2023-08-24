@@ -1,0 +1,27 @@
+<!-- app/views/users/ms_calendar.html.erb -->
+
+  <h1>Edit Menstruation Settings</h1>
+  <p>Welcome, <%= current_user.email %>! Your menstruation calendar</p>
+  <%= form_with(model: current_user) do |f| %>
+
+  <!-- Form fields for menstruation data -->
+    <div class="field">
+      <%= f.label :last_period_start %><br />
+      <%= f.date_field :last_period_start %>
+    </div>
+
+    <div class="field">
+      <%= f.label :cycle_length %><br />
+      <%= f.number_field :cycle_length %>
+    </div>
+
+    <div class="field">
+      <%= f.label :menstruation_length %><br />
+      <%= f.number_field :menstruation_length %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Update Menstruation Settings" %>
+    </div>
+  <% end %>
+

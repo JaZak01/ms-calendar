@@ -1,0 +1,32 @@
+<h1>User Calendar</h1>
+
+<% if current_user %>
+  <p>Welcome, <%= current_user.email %>! Your menstruation calendar</p>
+  <%= link_to "Edit Menstruation Settings", ms_calendar_data_path, class: "edit-button" %>
+
+
+
+  <%= month_calendar(attribute: :last_period_start) do |date, periods| %>
+    <%= date %>
+    <% if current_user.last_period_start.present? %>
+      <% menstruation_start = current_user.last_period_start %>
+      <% menstruation_end = current_user.last_period_start + current_user.menstruation_length.days - 1.day %>
+
+      <% if (menstruation_start..menstruation_end).include?(date) %>
+        <div class="menstruation-details">
+          <strong>Menstruation Period</strong>
+          <br>
+          <%= "Start: #{menstruation_start}" %>
+          <br>
+          <%= "End: #{menstruation_end}" %>
+        </div>
+      <%elsif  menstruation_end < date%>
+        <% menstruation_start = menstruation_start + current_user.cycle_length%>
+        <% menstruation_end = current_user.last_period_start + current_user.menstruation_length.days - 1.day %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+<% else %>
+  <p>You are not logged in.</p>
+<% end %>

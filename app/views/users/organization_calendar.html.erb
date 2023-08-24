@@ -1,0 +1,28 @@
+<!-- app/views/users/user_calendar.html.erb -->
+
+<h1>Organization Calendar</h1>
+
+<% if current_user.organization.present? %>
+  <p>Welcome, <%= current_user.email %>!</p>
+
+  <%= month_calendar(attribute: :start_date, end_attribute: :end_date) do |date, meetings| %>
+    <%= date %>
+    <% current_user.meetings.each do |meeting| %>
+      <% if meeting.start_time.to_date == date || (meeting.start_time.to_date < date && meeting.end_time.to_date >= date) %>
+        <div class="meeting-details">
+          <%= meeting.name %> <!-- Display meeting name -->
+          <br>
+          <%= meeting.description %>
+          <br>
+          <%= meeting.start_time.strftime('%H:%M') %> - <%= meeting.end_time.strftime('%H:%M') %> <!-- Display start and end times -->
+          <% if meeting.attachment.attached? %>
+            <p>Attachment: <%= link_to meeting.attachment.filename, url_for(meeting.attachment) %></p>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+<% else %>
+  <p>Nepatris do organizácie</p>
+<% end %>
