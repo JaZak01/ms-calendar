@@ -10,7 +10,6 @@ class UsersController < ApplicationController
 
 
   def update
-    puts "adamasadassssssssssssssssssssssssssssssssssss"
     @user = User.find(params[:id])
 
     if @user.update(user_params)
@@ -20,10 +19,11 @@ class UsersController < ApplicationController
 
   end
 
-  def ms_calendar
+  def ms_calendar    #TODO sprav to aby to islo na stranke
     if !current_user.last_period_start && !current_user.cycle_length && !current_user.menstruation_length
-      redirect_to ms_calendar_path
+      redirect_to ms_calendar_data_path
     end
+
   end
 
   private

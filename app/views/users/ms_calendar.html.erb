@@ -7,7 +7,7 @@
   <% cycle_dates = [] %>
   <% cycle_start_date = current_user.last_period_start %>
 
-  <% (0..11).each do |cycle_number| %>
+  <% (0..17).each do |cycle_number| %>
     <% cycle_dates << cycle_start_date + cycle_number * current_user.cycle_length.days %>
   <% end %>
 
@@ -48,7 +48,6 @@
       <% end %>
     <% end %>
   <% end %>
-
 
 <% else %>
   <p>You are not logged in.</p>
