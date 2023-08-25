@@ -1,15 +1,68 @@
-<p style="color: green"><%= notice %></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+      }
 
-<%= render @meeting %>
+      .green-text {
+          color: green;
+      }
 
+      .button {
+          display: inline-block;
+          padding: 10px 20px;
+          font-size: 14px;
+          text-align: center;
+          text-decoration: none;
+          border-radius: 4px;
+          transition: background-color 0.3s ease;
+      }
+
+      .button:hover {
+          background-color: #4CAF50;
+          color: white;
+      }
+
+      .button.red {
+          background-color: #f44336;
+      }
+  </style>
+</head>
+<body>
+<p class="green-text">Notification Message Goes Here</p>
+
+<!-- Render Meeting Details -->
 <div>
-  <%= link_to "Edit this meeting", edit_meeting_path(@meeting) %> |
-  <%= link_to "Back to meetings", meetings_path %>
-
-  <%= button_to "Destroy this meeting", @meeting, method: :delete %>
+  <p>
+    <strong>Name:</strong>
+    Meeting Name Here
+  </p>
+  <p>
+    <strong>Description:</strong>
+    Meeting description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  </p>
+  <!-- Other meeting details go here -->
 </div>
 
-<%#
-if @meeting.attachment.present
-  <p>Attachment: <%= link_to @meeting.attachment.filename, url_for(@meeting.attachment) %></p>
-%>
+<!-- Action Buttons -->
+<div>
+  <a class="button" href="<%= edit_meeting_path(@meeting) %>">Edit this meeting</a>
+  <a class="button" href="<%= meetings_path %>">Back to meetings</a>
+  <%= button_to "Destroy this meeting", @meeting, method: :delete, class: "button red", data: { confirm: 'Are you sure?' } %>
+</div>
+
+<!-- Attachment Section -->
+<!--
+  <% if @meeting.attachment.present? %>
+    <p>Attachment: <%= link_to @meeting.attachment.filename, url_for(@meeting.attachment) %></p>
+  <% end %>
+  -->
+</body>
+</html>

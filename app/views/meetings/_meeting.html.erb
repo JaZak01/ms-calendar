@@ -1,23 +1,51 @@
-<div id="<%= dom_id meeting %>">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+      }
+
+      #meeting-details {
+          background-color: #ffffff;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+          margin: 20px;
+      }
+
+      #meeting-details p {
+          margin: 10px 0;
+      }
+
+      #meeting-details strong {
+          color: #333333;
+      }
+  </style>
+</head>
+<body>
+<div id="meeting-details">
   <p>
     <strong>Name:</strong>
-    <%= meeting.name %>
+    Meeting Name Here
   </p>
-
   <p>
     <strong>Description:</strong>
-    <%= meeting.description %>
+    Meeting description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
   </p>
-
-
   <p>
     <strong>Start time:</strong>
-    <%= meeting.start_time %>
+    2023-08-24 09:00 AM
   </p>
-
   <p>
     <strong>End time:</strong>
-    <%= meeting.end_time %>
+    2023-08-24 10:30 AM
   </p>
-
 </div>
+</body>
+</html>
